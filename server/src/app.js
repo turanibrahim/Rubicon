@@ -28,11 +28,8 @@ app.get('/todo', (req, res) => {
      'Yapılacak 2'
     ])
 })
-app.get('/todo2', (req, res) => {
-    res.send([
-     'Yapılacak 1',
-     'Yapılacak 2'
-    ])
+app.get('/', (req, res) => {
+    res.send('hello');
 })
 
 app.listen( process.env.PORT || 8081)
