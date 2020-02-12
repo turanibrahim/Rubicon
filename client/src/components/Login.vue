@@ -24,6 +24,15 @@
                 <template>
                   <v-container py-0>
                     <v-row justify="center">
+                      <v-col cols="12" xs="12" class="align-self-center text-center">
+                        <v-alert
+                          border="left"
+                          color="red"
+                          v-if="this.errorMessage"
+                        >
+                          Error! Email or password is wrong.
+                        </v-alert>
+                      </v-col>
                       <v-col cols="10" xs="12">
                         <v-text-field
                           label="E-Mail"
@@ -64,6 +73,9 @@
 <script>
 export default {
   name: 'Login',
+  data: () => ({
+    errorMessage: false,
+  }),
 };
 </script>
 <style scoped>
