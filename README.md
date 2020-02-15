@@ -6,6 +6,9 @@ npm install
 # INSTALL SERVER DEPS
 cd server/
 npm install
-# RUN SERVER
+# RUN EXPRESS SERVER
 cd server/
 npm start
+# RUN VUE SERVER
+cd client/
+npm run serve
