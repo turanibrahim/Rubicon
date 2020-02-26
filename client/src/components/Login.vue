@@ -35,6 +35,7 @@
                       </v-col>
                       <v-col cols="10" xs="12">
                         <v-text-field
+                          v-model="email"
                           label="E-Mail"
                           outlined
                           hide-details
@@ -42,9 +43,13 @@
                       </v-col>
                       <v-col cols="10" xs="12">
                         <v-text-field
+                          v-model="password"
                           label="Password"
                           outlined
                           hide-details
+                          :type="showPassword ? 'text' : 'password'"
+                          :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                          @click:append="showPassword = !showPassword"
                         ></v-text-field>
                       </v-col>
                     </v-row>
@@ -85,7 +90,10 @@
 export default {
   name: 'Login',
   data: () => ({
+    email: '',
+    password: '',
     errorMessage: false,
+    showPassword: false,
   }),
   methods: {
     // eslint-disable-next-line no-unused-vars

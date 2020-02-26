@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Auth from '../views/Auth.vue';
+import Deneme from '../views/Deneme.vue';
 
 Vue.use(VueRouter);
 
@@ -15,6 +16,11 @@ const routes = [
     path: '/auth',
     name: 'auth',
     component: Auth,
+  },
+  {
+    path: '/deneme',
+    name: 'deneme',
+    component: Deneme,
   },
   {
     path: '/about',

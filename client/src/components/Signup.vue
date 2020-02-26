@@ -11,41 +11,53 @@
                 <template>
                   <v-container py-0>
                     <v-row justify="center">
-                      <v-col cols="10" xs="12">
-                        <v-text-field
-                          label="Name"
-                          outlined
-                          hide-details
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="10" xs="12">
-                        <v-text-field
-                          label="Surname"
-                          outlined
-                          hide-details
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="10" xs="12">
-                        <v-text-field
-                          label="Username"
-                          outlined
-                          hide-details
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="10" xs="12">
-                        <v-text-field
-                          label="E-Mail"
-                          outlined
-                          hide-details
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="10" xs="12">
-                        <v-text-field
-                          label="Password"
-                          outlined
-                          hide-details
-                        ></v-text-field>
-                      </v-col>
+                      <form>
+                        <v-col cols="10" xs="12">
+                          <v-text-field
+                            v-model="person.name"
+                            label="Name"
+                            outlined
+                            hide-details
+                            :error-messages="nameErrors"
+                            :counter="10"
+                            required
+                            @input="$v.person.name.$touch()"
+                            @blur="$v.person.name.$touch()"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="10" xs="12">
+                          <v-text-field
+                            v-model="person.surname"
+                            label="Surname"
+                            outlined
+                            hide-details
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="10" xs="12">
+                          <v-text-field
+                            v-model="person.username"
+                            label="Username"
+                            outlined
+                            hide-details
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="10" xs="12">
+                          <v-text-field
+                            v-model="person.email"
+                            label="E-Mail"
+                            outlined
+                            hide-details
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="10" xs="12">
+                          <v-text-field
+                            v-model="person.password"
+                            label="Password"
+                            outlined
+                            hide-details
+                          ></v-text-field>
+                        </v-col>
+                      </form>
                     </v-row>
                   </v-container>
                 </template>
@@ -87,16 +99,46 @@
 </template>
 
 <script>
+import { validationMixin } from 'vuelidate';
+import { required, maxLength, email } from 'vuelidate/lib/validators';
+
 export default {
+  mixins: [validationMixin],
   name: 'SignUp',
+  validations: {
+    name: { required, maxLength: maxLength(50) },
+    surname: { required, maxLength: maxLength(50) },
+    username: { required, maxLength: maxLength(50) },
+    email: { required, email },
+  },
   data: () => ({
+    person: {
+      name: '',
+      surname: '',
+      username: '',
+      email: '',
+      password: '',
+    },
     errorMessage: false,
+    name: '',
   }),
+  computed: {
+    nameErrors () {
+      const errors = []
+      if (!this.$v.person.name.$dirty) return errors
+      !this.$v.person.name.maxLength && errors.push('Name must be at most 10 characters long')
+      !this.$v.person.name.required && errors.push('Name is required.')
+      return errors
+    },
+  },
   methods: {
     // eslint-disable-next-line no-unused-vars
     goToLogin(event) {
       const value = 'changeScreenToLogin';
       this.$emit(value);
+    },
+    submit() {
+      this.$v.$touch();
     },
   },
 };
